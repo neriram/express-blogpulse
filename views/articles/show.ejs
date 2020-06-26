@@ -8,4 +8,34 @@
 
 <hr />
 
-<a href="/">&larr; Back Home</a>
+<a href="/">Back Home</a>
+<h3>
+    <% article.comments.forEach(function(comment) { %>
+      <div class="well">
+        <p>
+          "<%= comment.comment %>" - <%= comment.name %>
+        </p>
+      </div>
+    <% }) %>
+</h3>
+<h2> Leave a Comment </h2>
+<form method="POST" action="/articles/<%= article.id %>/comments">
+  <div class="form-group">
+  
+
+  <form action="/authors" method="POST">
+    <div class="form-group">
+      <label for="firstName"> Name</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+  
+    <div class="form-group">
+      <label for="lastName">Comment</label>
+      <input type="text" class="form-control" id="comment" name="comment" required>
+    </div>
+  
+    <input type="submit" class="btn btn-primary">
+  </form>
+  
+</div>
+</form>

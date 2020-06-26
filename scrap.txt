@@ -5,3 +5,16 @@ comment: text,
 articleId: integer
 
 sequelize model:create --name comment --attributes name:string,comment:text,articleId:integer
+
+Tag
+----
+content: string
+
+sequelize model:create --name tag --attributes content:string
+
+articlesTags (many to many)
+----
+articleId:integer
+tagId:integer
+
+sequelize model:create --name articlesTags --attributes articleId:integer,tagId:integer

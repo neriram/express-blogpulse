@@ -16,6 +16,17 @@ router.post('/', function(req, res) {
     res.status(400).render('main/404')
   })
 })
+//POST /articles/:id/comments - adds a comment to the article id in the params
+router.post('/:id/comments', (req, res) => {
+  db.comment.create({
+    name: req.body.name,
+    comment: req.body.comment,
+    articleId: req.params.id
+  }).then(comment =>{
+    res.redirect(`/articles/${req.params.id}`)
+  })
+})
+
 
 // GET /articles/new - display form for creating new articles
 router.get('/new', function(req, res) {
@@ -32,12 +43,13 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
   db.article.findOne({
     where: { id: req.params.id },
-    include: [db.author]
+    include: [db.author, db.comment]
   })
   .then(function(article) {
     if (!article) throw Error()
+    let comments = article.comments
     console.log(article.author)
-    res.render('articles/show', { article: article })
+    res.render('articles/show', { article: article, comments })
   })
   .catch(function(error) {
     console.log(error)
